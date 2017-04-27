@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 
+   <mapper namespace="org.gears.persistence.ReplyDAO">
+  
+ <insert id="insert" parameterType="org.gears.domain.ReplyVO">
+ insert tbl_review (rno,title,content,writer) values(#{rno},#{title},#{content},#{writer})
+ </insert>
+ 
+ 
+ <select id="getTotal" resultType="int">
+select count(*) from tbl_reply 
+ </select>
+ 
+ <select id="getlist" parameterType="org.gears.domain.Criteria" resultType="org.gears.domain.ReplyVO">
+ 
+select * from tbl_reply where sno>0 order by sno desc limit #{skip},#{size}  
+ </select>
+ 
+ 
+ <select id="read" parameterType="int" resultType="org.gears.domain.ReplyVO">
+ select * from tbl_reply where sno = #{sno}
+ </select>
+  </mapper>
+  
