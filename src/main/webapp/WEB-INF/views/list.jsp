@@ -10,7 +10,10 @@
 <body>
 <h2>${cri}</h2>
 
-<form id="bebe" action="/board/list" method="get">
+
+
+
+<form id="bebe" action="/list" method="get">
 <input type="hidden" id="rpage" name="page" value="${pageMaker.current}">
 <input type="hidden" id="rview" name="rno">
 
@@ -23,10 +26,11 @@
 <tr>${list.content}</tr>
 <tr>${list.gubun}</tr>
 <tr>${list.writer}</tr>
-<tr>${list.regdate}</tr></br>
-</c:forEach>
+<tr>${list.regdate}</tr>
+<tr><img src='display?fileName=${list.pname}'></tr> 
 </ul>
-${pageMaker }
+</c:forEach>
+
 <ul class="page">
 <c:if test="${pageMaker.prev}">
 <a href="${pageMaker.start -1}">prev</a>
@@ -39,7 +43,7 @@ ${pageMaker }
 </c:if>
 </ul>
 
-<form id="f1" action="/board/register" method="get">
+<form id="f1" action="/register" method="get">
 <button id="regBtn">등록하기</button>
 </form>
 
@@ -66,23 +70,24 @@ ${pageMaker }
 			
 			$("#rview").val($(this).attr("href"));
 			
-			$("#bebe").attr("action", "/board/view").submit();
+			$("#bebe").attr("action", "/view").submit();
 			
 			
-		})
+		});
+		
+	
 			
-			/* $.ajax({
-				type:'get',
-				url:'/board/list/' +${"#rno"},
-				headers:{"Content-Type":"application/json"}
 				
 				
 				
-			}); */
+			
+			
+		
+
 			
 		
 		
-	})
+	});
 
 
 </script>

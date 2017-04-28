@@ -1,8 +1,5 @@
 package org.gears.web;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,93 +15,56 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.mysql.fabric.Response;
-
 
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping
 public class listController {
-	
+
 	@Inject
 	ReviewService service;
-	
+
 	@Inject
 	ReplyService rservice;
-	
-	
+
 	@GetMapping("/list")
-	public void list(@ModelAttribute("cri")Criteria cri, Model model){
-		
+	public void list(@ModelAttribute("cri") Criteria cri, Model model,ReviewVO vo) throws Exception {
+
 		
 		List<ReviewVO> list = service.getList(cri);
 		
+
 		model.addAttribute("list", list);
-		model.addAttribute("pageMaker",new PageMaker(cri, service.countTotal()));
-		
-		
-		
+		model.addAttribute("pageMaker", new PageMaker(cri, service.countTotal()));
+
 	}
-	
+
 	@GetMapping("/view")
-	public void view(@ModelAttribute("cri") Criteria cri, int rno, Model model){
-		
-		
-		
+	public void view(@ModelAttribute("cri") Criteria cri, int rno, Model model) {
+
 		System.out.println("hhhhhh");
 		ReviewVO read = service.readone(rno);
-		
+
 		model.addAttribute("ReviewVO", read);
-		model.addAttribute("rlist",rservice.getList(cri));
-		model.addAttribute("pageMaker",new PageMaker(cri, rservice.countTotal()));
-		
-		
+		model.addAttribute("rlist", rservice.getList(cri));
+		model.addAttribute("pageMaker", new PageMaker(cri, rservice.countTotal()));
+
 	}
-	
+
 	@GetMapping("/register")
-	public void register(){
-		
-		
-		
-		
+	public void register() {
+
 	}
-	
 
 	@PostMapping("/register")
-	public String register2(ReviewVO vo){
+	public String register2(ReviewVO vo) {
 		
-		
-		
-			
-		
-		
-		System.out.println(vo.getPname());
-		
-		
-	
 		
 		service.create(vo);
-		
-		
-		return "redirect:/board/list";
-	}
-	
-	/*
-	@GetMapping("list/{current}")
-	public void list1(@PathVariable("current") Integer current, Criteria cri ){
-		
-		cri.setSkip(current);
-		
-		List<ReviewVO> list = service.getList(cri);
-		
-		System.out.println(current);
-	}
-	*/
 
+		return "redirect:/list";
+	}
 	
-	
+
+
 }

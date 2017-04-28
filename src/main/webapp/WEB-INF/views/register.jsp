@@ -4,7 +4,21 @@
 <title>Insert title here</title>
 </head>
 <body>
+<style>
 
+.file{
+background-color: aqua;
+width: 100px;
+height: 100px;
+}
+
+.f1{
+background-color: gray;
+width: 100px;
+height: 100px;
+}
+
+</style>
 
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -22,13 +36,19 @@
 					<label for="exampleInputPassword1">writer</label> <input
 						type="text" class="form-control" name="writer" value="writer">
 				</div>
-				<div class="form-group4">
-					<label for="exampleInputFile">파일 업로드</label> <input type="file"
-						name="pname" value="pname">
+				<div  >
+					<input class="f1" type="hidden" class="form-control" name="pname" value="pname">
+					
+				
 				</div>
+				
+				
+				
 				<button class="btn">제출</button>
 			</form>
-
+				 <div class="file">
+					
+				</div> 
 
 			<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 				integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -37,14 +57,47 @@
 
 			<script>
 				$(document).ready(function(e) {
+			
+					
+			 	$(".file").on("dragenter dragover", function(e) {
+					e.preventDefault();
+				}) 
+					
+				$(".file").on("drop", function(e) {
+					e.preventDefault();
+					
+					var files = e.originalEvent.dataTransfer.files;
+					
+					console.log(files);
+					
+					var file = files[0];
+					
+					var formData = new FormData();
 
-					$(".btn").on("click", function() {
-						e.preventDeafult();
+					formData.append("file",file);
+					
+					$(".f1").text(files[0].name);
+					$(".f1").val(files[0].name);
+					
+					$.ajax({
+						url:"/upload",
+						data: formData,
+						processData:false,
+						contentType:false,
+						type:'post',
+						success:function(result){
+						console.log(result)
+						}
+						
+						
+						
+						
+						
+					
 
-						var files = e.originalEvent.dataTransfer.files;
-
-						console.log(files);
-					});
+				});
+				});
+					
 
 				});
 			</script>
